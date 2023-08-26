@@ -1,9 +1,9 @@
 // const mongoose = require('mongoose');
-const BadRequestError = require("../errors/bad-request-error");
-const Movie = require("../models/movie");
+const BadRequestError = require('../errors/bad-request-error');
+const Movie = require('../models/movie');
 
-const { statusCode } = require("../utils/constants");
-const { checkOwnerMovie, checkObject } = require("./validation");
+const { statusCode } = require('../utils/constants');
+const { checkOwnerMovie, checkObject } = require('./validation');
 
 module.exports.getMoviesByOwner = (req, res, next) => {
   Movie.find({ owner: req.user._id })
@@ -26,7 +26,7 @@ module.exports.createMovie = (req, res, next) => {
     nameRU,
     nameEN,
   } = req.body;
-  Card.create({
+  Movie.create({
     country,
     director,
     duration,
@@ -42,11 +42,11 @@ module.exports.createMovie = (req, res, next) => {
   })
     .then((card) => res.status(statusCode.created).send(card))
     .catch((err) => {
-      if (err.name === "ValidationError") {
+      if (err.name === 'ValidationError') {
         next(
           new BadRequestError(
-            "Некорректные данные при создании карточки фильма"
-          )
+            'Некорректные данные при создании карточки фильма',
+          ),
         );
       } else {
         next(err);
@@ -55,9 +55,12 @@ module.exports.createMovie = (req, res, next) => {
 };
 
 module.exports.deleteMovieById = (req, res, next) => {
-  Movie.findById({ movieId: req.params.movieId })
+  Movie.find({ movieId: req.params.movieId, owner: req.user._id })
     .then((movie) => checkOwnerMovie(movie, req.user._id))
-    .then(() => Card.findOneAndRemove({ movieId: req.params.movieId }))
+    .then(() => Movie.findOneAndRemove({
+      movieId: req.params.movieId,
+      owner: req.user._id,
+    }))
     .then((movie) => checkObject(movie, res))
     .catch(next);
 };

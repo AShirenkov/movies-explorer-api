@@ -1,6 +1,6 @@
-const AccessDeniedError = require("../errors/access-denied-error");
-const NotFoundError = require("../errors/not-found-error");
-const { statusCode } = require("../utils/constants");
+const AccessDeniedError = require('../errors/access-denied-error');
+const NotFoundError = require('../errors/not-found-error');
+const { statusCode } = require('../utils/constants');
 
 // комментарий оставлен,  для  демонстрации примера валидации без joi
 /* const checkMongoId = (id) => {
@@ -17,7 +17,7 @@ const { statusCode } = require("../utils/constants");
 const checkObject = (obj, res) => {
   if (!obj) {
     return Promise.reject(
-      new NotFoundError("Запрашиваемые данные отсутствуют")
+      new NotFoundError('Запрашиваемые данные отсутствуют'),
     );
   }
 
@@ -41,12 +41,12 @@ const checkObject = (obj, res) => {
 const checkOwnerMovie = (obj, id) => {
   if (!obj) {
     return Promise.reject(
-      new NotFoundError("Запрашиваемые данные отсутствуют")
+      new NotFoundError('Запрашиваемые данные отсутствуют'),
     );
   }
   if (obj.owner._id.toString() !== id) {
     return Promise.reject(
-      new AccessDeniedError("Нет доступа к удалению abkmvf")
+      new AccessDeniedError('Нет доступа к удалению фильма'),
     );
   }
   return obj;

@@ -9,18 +9,18 @@ const { statusCode } = require('../utils/constants');
 const AlreadyExistError = require('../errors/already-exist-error');
 const BadRequestError = require('../errors/bad-request-error');
 
-module.exports.getUsers = (req, res, next) => {
-  User.find({})
-    // возвращаем записанные в базу данные пользователю
-    .then((users) => res.send(users))
-    .catch(next);
-};
+// module.exports.getUsers = (req, res, next) => {
+//   User.find({})
+//     // возвращаем записанные в базу данные пользователю
+//     .then((users) => res.send(users))
+//     .catch(next);
+// };
 
-module.exports.getUserById = (req, res, next) => {
-  User.findById(req.params.userId)
-    .then((user) => checkObject(user, res))
-    .catch(next);
-};
+// module.exports.getUserById = (req, res, next) => {
+//   User.findById(req.params.userId)
+//     .then((user) => checkObject(user, res))
+//     .catch(next);
+// };
 
 module.exports.getCurrentUser = (req, res, next) => {
   User.findById(req.user._id)
@@ -85,28 +85,28 @@ module.exports.updateProfile = (req, res, next) => {
     });
 };
 
-module.exports.updateAvatar = (req, res, next) => {
-  // дополнительная проверка чтобы не переписали этим запросом имя и описание
+// module.exports.updateAvatar = (req, res, next) => {
+//   // дополнительная проверка чтобы не переписали этим запросом имя и описание
 
-  User.findByIdAndUpdate(
-    req.user._id,
-    req.body,
-    // Передадим объект опций:
-    {
-      new: true, // обработчик then получит на вход обновлённую запись
-      runValidators: true, // данные будут валидированы перед изменением
-      upsert: false, // если пользователь не найден, он не будет создан
-    },
-  )
-    .then((user) => checkObject(user, res))
-    .catch((err) => {
-      if (err.name === 'ValidationError') {
-        next(new BadRequestError('Некорректные данные при обновлении аватара'));
-      } else {
-        next(err);
-      }
-    });
-};
+//   User.findByIdAndUpdate(
+//     req.user._id,
+//     req.body,
+//     // Передадим объект опций:
+//     {
+//       new: true, // обработчик then получит на вход обновлённую запись
+//       runValidators: true, // данные будут валидированы перед изменением
+//       upsert: false, // если пользователь не найден, он не будет создан
+//     },
+//   )
+//     .then((user) => checkObject(user, res))
+//     .catch((err) => {
+//       if (err.name === 'ValidationError') {
+//         next(new BadRequestError('Некорректные данные при обновлении аватара'));
+//       } else {
+//         next(err);
+//       }
+//     });
+// };
 // controllers/users.js
 
 module.exports.login = (req, res, next) => {
