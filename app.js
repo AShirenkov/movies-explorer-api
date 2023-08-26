@@ -1,10 +1,13 @@
 const express = require('express');
 require('dotenv').config();
 const bodyParser = require('body-parser');
+const helmet = require('helmet');
+
 // Слушаем 3000 порт
 const mongoose = require('mongoose');
 
 const { errors } = require('celebrate');
+const limiter = require('./utils/express-limiter');
 
 const route = require('./routes/index');
 
@@ -18,6 +21,8 @@ const { PORT = 3000 } = process.env;
 mongoose.connect('mongodb://127.0.0.1:27017/mestodb', {});
 
 const app = express();
+app.use(helmet());
+app.use(limiter);
 app.use(bodyParser.json()); // для собирания JSON-формата
 app.use(bodyParser.urlencoded({ extended: true })); // для приёма веб-страниц внутри POST-запроса
 app.use(requestLogger); // подключаем логгер запросов
