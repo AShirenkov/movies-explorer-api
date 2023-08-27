@@ -6,6 +6,12 @@ const User = require('../models/user');
 const { checkObject } = require('./validation');
 const { statusCode } = require('../utils/constants');
 
+const {
+  INVALID_DATA_USER_CREATED,
+  INVALID_DATA_USER_EDITED,
+  ERROR_ALREADY_EXIST_USER,
+} = require('../utils/errorMessageConstants');
+
 const AlreadyExistError = require('../errors/already-exist-error');
 const BadRequestError = require('../errors/bad-request-error');
 
@@ -47,11 +53,9 @@ module.exports.createUser = (req, res, next) => {
     .catch((err) => {
       // проверяем статус и выставляем сообщение в зависимости от него
       if (err.code === 11000) {
-        next(new AlreadyExistError('Данные с таким email уже есть в БД'));
+        next(new AlreadyExistError(ERROR_ALREADY_EXIST_USER));
       } else if (err.name === 'ValidationError') {
-        next(
-          new BadRequestError('Некорректные данные при создании пользователя'),
-        );
+        next(new BadRequestError(INVALID_DATA_USER_CREATED));
       } else {
         next(err);
       }
@@ -74,11 +78,7 @@ module.exports.updateProfile = (req, res, next) => {
     .then((user) => checkObject(user, res))
     .catch((err) => {
       if (err.name === 'ValidationError') {
-        next(
-          new BadRequestError(
-            'Некорректные данные при обновлении данных пользователя',
-          ),
-        );
+        next(new BadRequestError(INVALID_DATA_USER_EDITED));
       } else {
         next(err);
       }

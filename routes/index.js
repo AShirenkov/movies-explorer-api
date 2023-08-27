@@ -12,6 +12,8 @@ const {
   checkSignup,
 } = require('../middlewares/requestValidation');
 
+const { INVALID_ADDRESS } = require('../utils/errorMessageConstants');
+
 // router.get("/crash-test", () => {
 //   setTimeout(() => {
 //     throw new Error("Сервер сейчас упадёт");
@@ -26,7 +28,7 @@ router.use('/users', routerUsers); // запускаем
 // router.use("/cards", routerCards); // запускаем
 router.use('/movies', routerMovies); // запускаем
 router.use('/', (req, res, next) => {
-  next(new NotFoundError('Такого адреса не существует'));
+  next(new NotFoundError(INVALID_ADDRESS));
 });
 
 module.exports = router;

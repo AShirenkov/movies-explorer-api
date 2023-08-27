@@ -3,6 +3,7 @@ const BadRequestError = require('../errors/bad-request-error');
 const Movie = require('../models/movie');
 
 const { statusCode } = require('../utils/constants');
+const { INVALID_DATA_MOVIE } = require('../utils/errorMessageConstants');
 const { checkOwnerMovie, checkObject } = require('./validation');
 
 module.exports.getMoviesByOwner = (req, res, next) => {
@@ -43,11 +44,7 @@ module.exports.createMovie = (req, res, next) => {
     .then((card) => res.status(statusCode.created).send(card))
     .catch((err) => {
       if (err.name === 'ValidationError') {
-        next(
-          new BadRequestError(
-            'Некорректные данные при создании карточки фильма',
-          ),
-        );
+        next(new BadRequestError(INVALID_DATA_MOVIE));
       } else {
         next(err);
       }

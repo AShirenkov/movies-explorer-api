@@ -7,7 +7,7 @@ const helmet = require('helmet');
 const mongoose = require('mongoose');
 
 const { errors } = require('celebrate');
-const limiter = require('./utils/express-limiter');
+const limiter = require('./utils/expressLimiter');
 
 const route = require('./routes/index');
 

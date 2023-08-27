@@ -4,6 +4,11 @@ const isEmail = require('validator/lib/isEmail');
 // const isURL = require('validator/lib/isURL');
 const AuthError = require('../errors/auth-error');
 
+const {
+  INVALID_EMAIL,
+  INVALID_LOGIN,
+} = require('../utils/errorMessageConstants');
+
 const userSchema = new mongoose.Schema({
   email: {
     type: String,
@@ -11,7 +16,7 @@ const userSchema = new mongoose.Schema({
     required: true,
     validate: {
       validator: (v) => isEmail(v),
-      message: 'Неправильный формат почты',
+      message: INVALID_EMAIL,
     },
   },
   password: {
@@ -45,12 +50,12 @@ userSchema.statics.findUserByCredentials = function (email, password) {
     .select('+password')
     .then((user) => {
       if (!user) {
-        return Promise.reject(new AuthError('Неправильные почта или пароль'));
+        return Promise.reject(new AuthError(INVALID_LOGIN));
       }
 
       return bcrypt.compare(password, user.password).then((matched) => {
         if (!matched) {
-          return Promise.reject(new AuthError('Неправильные почта или пароль'));
+          return Promise.reject(new AuthError(INVALID_LOGIN));
         }
 
         return user; // теперь user доступен
