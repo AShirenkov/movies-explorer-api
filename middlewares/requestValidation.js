@@ -1,6 +1,6 @@
 const { celebrate, Joi } = require('celebrate');
 
-const regexUrl = /https?:\/\/(www\.)?[\w\-@]{1,63}\.[a-z0-9]{1,63}[-a-z0-9._~:/?#[\]@!$&'()*+,;=]*#?/i;
+const { REGEX_URL } = require('../utils/constants');
 
 module.exports.checkSignin = celebrate({
   body: Joi.object().keys({
@@ -61,9 +61,9 @@ module.exports.checkMovie = celebrate({
     duration: Joi.number().required(),
     year: Joi.number().required(),
     description: Joi.string().required(),
-    image: Joi.string().required().regex(regexUrl),
-    trailerLink: Joi.string().required().regex(regexUrl),
-    thumbnail: Joi.string().required().regex(regexUrl),
+    image: Joi.string().required().regex(REGEX_URL),
+    trailerLink: Joi.string().required().regex(REGEX_URL),
+    thumbnail: Joi.string().required().regex(REGEX_URL),
     movieId: Joi.number().required(),
     nameRU: Joi.string().required(),
     nameEN: Joi.string().required(),
