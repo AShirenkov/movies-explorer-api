@@ -6,5 +6,5 @@ module.exports.statusCode = {
   internalServerError: 500,
 };
 
-module.exports.MONGODB_DEV_CON = "mongodb://127.0.0.1:27017/bitfilmsdb";
+module.exports.MONGODB_DEV_CON = 'mongodb://127.0.0.1:27017/bitfilmsdb';
 module.exports.SERVER_DEV_PORT = 3000;
