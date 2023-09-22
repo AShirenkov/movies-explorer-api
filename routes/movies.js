@@ -10,8 +10,8 @@ const {
   checkMovie,
 } = require('../middlewares/requestValidation');
 
-router.get('', getMoviesByOwner);
-router.post('', checkMovie, createMovie);
+router.get('/', getMoviesByOwner);
+router.post('/', checkMovie, createMovie);
 router.delete('/:movieId', checkMovieId, deleteMovieById);
 
 module.exports = router;
