@@ -1,10 +1,10 @@
 // const mongoose = require('mongoose');
-const BadRequestError = require("../errors/bad-request-error");
-const Movie = require("../models/movie");
+const BadRequestError = require('../errors/bad-request-error');
+const Movie = require('../models/movie');
 
-const { statusCode } = require("../utils/constants");
-const { INVALID_DATA_MOVIE } = require("../utils/errorMessageConstants");
-const { checkOwnerMovie, checkObject } = require("./validation");
+const { statusCode } = require('../utils/constants');
+const { INVALID_DATA_MOVIE } = require('../utils/errorMessageConstants');
+const { checkOwnerMovie, checkObject } = require('./validation');
 
 module.exports.getMoviesByOwner = (req, res, next) => {
   Movie.find({ owner: req.user._id })
@@ -43,7 +43,7 @@ module.exports.createMovie = (req, res, next) => {
   })
     .then((card) => res.status(statusCode.created).send(card))
     .catch((err) => {
-      if (err.name === "ValidationError") {
+      if (err.name === 'ValidationError') {
         next(new BadRequestError(INVALID_DATA_MOVIE));
       } else {
         next(err);
@@ -54,12 +54,10 @@ module.exports.createMovie = (req, res, next) => {
 module.exports.deleteMovieById = (req, res, next) => {
   Movie.findOne({ movieId: req.params.movieId, owner: req.user._id })
     .then((movie) => checkOwnerMovie(movie, req.user._id))
-    .then(() =>
-      Movie.findOneAndRemove({
-        movieId: req.params.movieId,
-        owner: req.user._id,
-      })
-    )
+    .then(() => Movie.findOneAndRemove({
+      movieId: req.params.movieId,
+      owner: req.user._id,
+    }))
     .then((movie) => checkObject(movie, res))
     .catch(next);
 };

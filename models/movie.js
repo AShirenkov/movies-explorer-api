@@ -1,6 +1,6 @@
-const mongoose = require("mongoose");
-const isURL = require("validator/lib/isURL");
-const { INVALID_URL } = require("../utils/errorMessageConstants");
+const mongoose = require('mongoose');
+const isURL = require('validator/lib/isURL');
+const { INVALID_URL } = require('../utils/errorMessageConstants');
 
 const movieSchema = new mongoose.Schema({
   country: {
@@ -51,7 +51,7 @@ const movieSchema = new mongoose.Schema({
   owner: {
     // ссылка на модель автора карточки, тип ObjectId, обязательное поле;
     type: mongoose.Schema.Types.ObjectId,
-    ref: "user",
+    ref: 'user',
     required: true,
   },
 
@@ -70,4 +70,4 @@ const movieSchema = new mongoose.Schema({
   },
 });
 
-module.exports = mongoose.model("movie", movieSchema);
+module.exports = mongoose.model('movie', movieSchema);

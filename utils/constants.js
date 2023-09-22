@@ -6,8 +6,7 @@ module.exports.statusCode = {
   internalServerError: 500,
 };
 
-module.exports.MONGODB_DEV_CON = "mongodb://127.0.0.1:27017/bitfilmsdb3";
+module.exports.MONGODB_DEV_CON = 'mongodb://127.0.0.1:27017/bitfilmsdb3';
 module.exports.SERVER_DEV_PORT = 3000;
 
-module.exports.REGEX_URL =
-  /https?:\/\/(www\.)?[\w\-@]{1,63}\.[a-z0-9]{1,63}[-a-z0-9._~:/?#[\]@!$&'()*+,;=]*#?/i;
+module.exports.REGEX_URL = /https?:\/\/(www\.)?[\w\-@]{1,63}\.[a-z0-9]{1,63}[-a-z0-9._~:/?#[\]@!$&'()*+,;=]*#?/i;
