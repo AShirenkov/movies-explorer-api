@@ -2,6 +2,7 @@
 const allowedCors = [
   'https://ashir84.diplom.nomoredomainsicu.ru',
   'http://ashir84.diplom.nomoredomainsicu.ru',
+  'http://localhost:3001',
   'http://localhost:3000',
 ];
 const DEFAULT_ALLOWED_METHODS = 'GET,HEAD,PUT,PATCH,POST,DELETE';

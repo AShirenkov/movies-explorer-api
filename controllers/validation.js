@@ -1,10 +1,10 @@
-const AccessDeniedError = require('../errors/access-denied-error');
-const NotFoundError = require('../errors/not-found-error');
-const { statusCode } = require('../utils/constants');
+const AccessDeniedError = require("../errors/access-denied-error");
+const NotFoundError = require("../errors/not-found-error");
+const { statusCode } = require("../utils/constants");
 const {
   DATA_NOT_FOUND,
   ACCESS_DENIED_REMOVE,
-} = require('../utils/errorMessageConstants');
+} = require("../utils/errorMessageConstants");
 
 // комментарий оставлен,  для  демонстрации примера валидации без joi
 /* const checkMongoId = (id) => {
@@ -47,6 +47,7 @@ const checkOwnerMovie = (obj, id) => {
   if (obj.owner._id.toString() !== id) {
     return Promise.reject(new AccessDeniedError(ACCESS_DENIED_REMOVE));
   }
+
   return obj;
 };
 

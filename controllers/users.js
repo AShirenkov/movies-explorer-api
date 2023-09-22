@@ -40,15 +40,13 @@ module.exports.createUser = (req, res, next) => {
     .then((hash) => User.create({
       email: req.body.email,
       password: hash,
-      avatar: req.body.avatar,
+
       name: req.body.name,
-      about: req.body.about,
     }))
     .then((user) => res.status(statusCode.created).send({
       email: user.email,
-      avatar: user.avatar,
+
       name: user.name,
-      about: user.about,
     }))
     .catch((err) => {
       // проверяем статус и выставляем сообщение в зависимости от него
